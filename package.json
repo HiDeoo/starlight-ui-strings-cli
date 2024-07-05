@@ -13,6 +13,9 @@
     "prepare": "husky",
     "prepublishOnly": "pnpm build"
   },
+  "dependencies": {
+    "globby": "^14.0.2"
+  },
   "devDependencies": {
     "@hideoo/eslint-config": "^3.0.1",
     "@hideoo/prettier-config": "^2.0.0",

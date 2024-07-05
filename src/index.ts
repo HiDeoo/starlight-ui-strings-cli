@@ -2,12 +2,16 @@ import fs from 'node:fs/promises'
 import path from 'node:path'
 import util from 'node:util'
 
-const starlightTranslationsPaths = [['packages', 'starlight', 'translations'], ['translations']]
+import { globby } from 'globby'
+
+const translationsDirs = [path.join('packages', 'starlight', 'translations'), path.join('translations')]
+
+// TODO(HiDeoo) add after
 
 async function main() {
-  const translationsPath = await getStarlightTranslationsPath()
+  const translationsDir = await getTranslationsDir()
 
-  if (!translationsPath) {
+  if (!translationsDir) {
     console.error('Failed to find Starlight translations.')
     console.error(
       'Please run this script from the root of the Starlight repository or the `packages/starlight/` directory.',
@@ -46,16 +50,15 @@ async function main() {
     }
 
     if (args.add && args.value) {
-      // TODO(HiDeoo)
-      // await addTranslation(translationsPath, args.add, args.value)
+      await addTranslation(translationsDir, args.add, args.value)
     } else if (args.delete) {
       // TODO(HiDeoo)
-      // await deleteTranslation(translationsPath, args.delete)
+      // await deleteTranslation(translationsDir, args.delete)
     } else if (args.update && args.value) {
       // TODO(HiDeoo)
-      // await updateTranslation(translationsPath, args.update, args.value)
+      // await updateTranslation(translationsDir, args.update, args.value)
     } else {
-      throw new Error('Invalid command.')
+      throw new Error('Unrecognized command.')
     }
   } catch (error) {
     console.error(`Failed to parse command line arguments: ${getErrorMessage(error)}`)
@@ -63,18 +66,36 @@ async function main() {
   }
 }
 
-async function getStarlightTranslationsPath(): Promise<string | undefined> {
-  for (const starlightTranslationsPath of starlightTranslationsPaths) {
-    const translationsPath = path.join(...starlightTranslationsPath)
-
+async function getTranslationsDir(): Promise<string | undefined> {
+  for (const translationsDir of translationsDirs) {
     try {
-      await fs.access(translationsPath)
-      return translationsPath
+      await fs.access(translationsDir)
+      return translationsDir
     } catch {
       // Ignore error and try next path.
     }
   }
   return
+}
+
+async function addTranslation(translationsDir: string, key: string, value: string) {
+  try {
+    const translationFiles = await getTranslationFiles(translationsDir)
+
+    for (const translationFile of translationFiles) {
+      const data = await fs.readFile(translationFile, 'utf8')
+      const content = JSON.parse(data) as Record<string, string>
+      content[key] = value
+      await fs.writeFile(translationFile, `${JSON.stringify(content, null, 2)}\n`)
+    }
+  } catch (error) {
+    console.error(`Failed to add translation: ${getErrorMessage(error)}`)
+    process.exit(1)
+  }
+}
+
+function getTranslationFiles(translationsDir: string) {
+  return globby('*.json', { absolute: true, cwd: translationsDir })
 }
 
 function getErrorMessage(error: unknown) {
