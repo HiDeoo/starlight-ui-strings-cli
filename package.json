@@ -1,0 +1,63 @@
+{
+  "name": "@hideoo/starlight-ui-strings-cli",
+  "version": "0.0.1",
+  "license": "MIT",
+  "description": "CLI utility to quickly add, update or delete Starlight UI strings in all translation files.",
+  "author": "HiDeoo <github@hideoo.dev> (https://hideoo.dev)",
+  "bin": "./cli.cjs",
+  "type": "module",
+  "scripts": {
+    "dev": "tsup --watch",
+    "build": "tsup",
+    "lint": "prettier -c --cache . && eslint . --cache --max-warnings=0 && tsc --noEmit",
+    "prepare": "husky",
+    "prepublishOnly": "pnpm build"
+  },
+  "dependencies": {
+    "globby": "^14.0.2"
+  },
+  "devDependencies": {
+    "@hideoo/eslint-config": "^3.0.1",
+    "@hideoo/prettier-config": "^2.0.0",
+    "@hideoo/tsconfig": "^2.0.1",
+    "@types/node": "^18.19.39",
+    "eslint": "^8.57.0",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.7",
+    "tsup": "^8.1.0",
+    "prettier": "^3.3.2",
+    "typescript": "^5.5.3"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "packageManager": "pnpm@9.4.0",
+  "files": [
+    "cli.mjs",
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": false,
+  "keywords": [
+    "starlight",
+    "cli",
+    "ui",
+    "strings",
+    "translation"
+  ],
+  "homepage": "https://github.com/HiDeoo/starlight-ui-strings-cli",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/HiDeoo/starlight-ui-strings-cli.git"
+  },
+  "bugs": "https://github.com/HiDeoo/starlight-ui-strings-cli/issues",
+  "prettier": "@hideoo/prettier-config",
+  "lint-staged": {
+    "*": [
+      "prettier -w -u --cache",
+      "eslint --cache --no-warn-ignored --max-warnings=0"
+    ]
+  }
+}
