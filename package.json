@@ -2,7 +2,7 @@
   "name": "@hideoo/starlight-ui-strings-cli",
   "version": "0.0.1",
   "license": "MIT",
-  "description": "// TODO(HiDeoo) ",
+  "description": "CLI utility to quickly add, update or delete Starlight UI strings in all translation files.",
   "author": "HiDeoo <github@hideoo.dev> (https://hideoo.dev)",
   "bin": "./cli.cjs",
   "type": "module",
@@ -41,7 +41,11 @@
   },
   "sideEffects": false,
   "keywords": [
-    "// TODO(HiDeoo) "
+    "starlight",
+    "cli",
+    "ui",
+    "strings",
+    "translation"
   ],
   "homepage": "https://github.com/HiDeoo/starlight-ui-strings-cli",
   "repository": {
