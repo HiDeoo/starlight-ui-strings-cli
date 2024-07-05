@@ -6,8 +6,6 @@ import { globby } from 'globby'
 
 const translationsDirs = [path.join('packages', 'starlight', 'translations'), path.join('translations')]
 
-// TODO(HiDeoo) add after
-
 async function main() {
   const translationsDir = await getTranslationsDir()
 
@@ -25,6 +23,9 @@ async function main() {
         add: {
           type: 'string',
           short: 'a',
+        },
+        after: {
+          type: 'string',
         },
         delete: {
           type: 'string',
@@ -50,7 +51,7 @@ async function main() {
     }
 
     if (args.add && args.value) {
-      await addTranslation(translationsDir, args.add, args.value)
+      await addTranslation(translationsDir, args.add, args.value, args.after)
     } else if (args.delete) {
       await deleteTranslation(translationsDir, args.delete)
     } else if (args.update && args.value) {
@@ -76,13 +77,26 @@ async function getTranslationsDir(): Promise<string | undefined> {
   return
 }
 
-async function addTranslation(translationsDir: string, key: string, value: string) {
+async function addTranslation(translationsDir: string, key: string, value: string, after?: string) {
   try {
     const translationFiles = await getTranslationFiles(translationsDir)
 
     for (const translationFile of translationFiles) {
-      const content = await readTranslationFile(translationFile)
-      content[key] = value
+      let content = await readTranslationFile(translationFile)
+
+      if (after && content[after]) {
+        const newContent: Record<string, string> = {}
+        for (const [k, v] of Object.entries(content)) {
+          newContent[k] = v
+          if (k === after) {
+            newContent[key] = value
+          }
+        }
+        content = newContent
+      } else {
+        content[key] = value
+      }
+
       await saveTranslationFile(translationFile, content)
     }
   } catch (error) {
