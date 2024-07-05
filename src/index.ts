@@ -52,8 +52,7 @@ async function main() {
     if (args.add && args.value) {
       await addTranslation(translationsDir, args.add, args.value)
     } else if (args.delete) {
-      // TODO(HiDeoo)
-      // await deleteTranslation(translationsDir, args.delete)
+      await deleteTranslation(translationsDir, args.delete)
     } else if (args.update && args.value) {
       await updateTranslation(translationsDir, args.update, args.value)
     } else {
@@ -88,6 +87,22 @@ async function addTranslation(translationsDir: string, key: string, value: strin
     }
   } catch (error) {
     console.error(`Failed to add translation: ${getErrorMessage(error)}`)
+    process.exit(1)
+  }
+}
+
+async function deleteTranslation(translationsDir: string, key: string) {
+  try {
+    const translationFiles = await getTranslationFiles(translationsDir)
+
+    for (const translationFile of translationFiles) {
+      const content = await readTranslationFile(translationFile)
+      if (!content[key]) continue
+      delete content[key]
+      await saveTranslationFile(translationFile, content)
+    }
+  } catch (error) {
+    console.error(`Failed to delete translation: ${getErrorMessage(error)}`)
     process.exit(1)
   }
 }
