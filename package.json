@@ -4,7 +4,7 @@
   "license": "MIT",
   "description": "CLI utility to quickly add, update or delete Starlight UI strings in all translation files.",
   "author": "HiDeoo <github@hideoo.dev> (https://hideoo.dev)",
-  "bin": "./cli.cjs",
+  "bin": "./cli.mjs",
   "type": "module",
   "scripts": {
     "dev": "tsup --watch",
