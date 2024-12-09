@@ -9,8 +9,8 @@
   "scripts": {
     "dev": "tsup --watch",
     "build": "tsup",
-    "lint": "prettier -c --cache . && eslint . --cache --max-warnings=0 && tsc --noEmit",
-    "prepare": "husky",
+    "lint": "eslint . --cache --max-warnings=0 && tsc --noEmit",
+    "format": "prettier -w --cache --ignore-unknown .",
     "prepublishOnly": "pnpm build"
   },
   "dependencies": {
@@ -22,8 +22,6 @@
     "@hideoo/tsconfig": "^2.0.1",
     "@types/node": "^18.19.39",
     "eslint": "^8.57.0",
-    "husky": "^9.0.11",
-    "lint-staged": "^15.2.7",
     "tsup": "^8.1.0",
     "prettier": "^3.3.2",
     "typescript": "^5.5.3"
@@ -53,11 +51,5 @@
     "url": "https://github.com/HiDeoo/starlight-ui-strings-cli.git"
   },
   "bugs": "https://github.com/HiDeoo/starlight-ui-strings-cli/issues",
-  "prettier": "@hideoo/prettier-config",
-  "lint-staged": {
-    "*": [
-      "prettier -w -u --cache",
-      "eslint --cache --no-warn-ignored --max-warnings=0"
-    ]
-  }
+  "prettier": "@hideoo/prettier-config"
 }
