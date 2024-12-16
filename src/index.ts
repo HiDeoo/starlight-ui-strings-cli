@@ -1,6 +1,6 @@
 import fs from 'node:fs/promises'
 import path from 'node:path'
-import util from 'node:util'
+import { parseArgs } from 'node:util'
 
 import { globby } from 'globby'
 
@@ -18,7 +18,7 @@ async function main() {
   }
 
   try {
-    const { values: args } = util.parseArgs({
+    const { values: args } = parseArgs({
       options: {
         add: {
           type: 'string',
@@ -154,4 +154,4 @@ function getErrorMessage(error: unknown) {
   return error instanceof Error ? error.message : String(error)
 }
 
-main().catch(console.error)
+main().catch((error: unknown) => console.error(error))
