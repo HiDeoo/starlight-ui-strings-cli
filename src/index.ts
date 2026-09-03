@@ -4,7 +4,7 @@ import { parseArgs } from 'node:util'
 
 import { globby } from 'globby'
 
-const translationsDirs = [path.join('packages', 'starlight', 'translations'), path.join('translations')]
+const translationsDirs = [path.join('packages', 'starlight', 'src', 'translations'), path.join('translations')]
 
 async function main() {
   const translationsDir = await getTranslationsDir()
