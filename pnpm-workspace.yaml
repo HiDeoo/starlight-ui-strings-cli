@@ -6,4 +6,4 @@ allowBuilds:
 minimumReleaseAge: 4320
 
 minimumReleaseAgeExclude:
-  - '@hideoo/eslint-config@5.2.0'
+  - '@hideoo/eslint-config@5.2.1'

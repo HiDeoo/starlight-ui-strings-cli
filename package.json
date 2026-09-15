@@ -20,7 +20,7 @@
   "devDependencies": {
     "@changesets/changelog-github": "^1.0.1",
     "@changesets/cli": "^3.0.2",
-    "@hideoo/eslint-config": "^5.2.0",
+    "@hideoo/eslint-config": "^5.2.1",
     "@hideoo/prettier-config": "^2.0.2",
     "@hideoo/tsconfig": "^2.0.4",
     "@types/node": "^18.19.39",
