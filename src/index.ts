@@ -44,9 +44,11 @@ async function main() {
 
     if (!args.add && !args.delete && !args.update) {
       throw new Error("You must specify either the '--add', '--delete', or '--update' option.")
-    } else if (args.add && !args.value) {
+    }
+    if (args.add && !args.value) {
       throw new Error("You must specify a value to add with the '--value' option.")
-    } else if (args.update && !args.value) {
+    }
+    if (args.update && !args.value) {
       throw new Error("You must specify a value to update with the '--value' option.")
     }
 
@@ -84,7 +86,7 @@ async function addTranslation(translationsDir: string, key: string, value: strin
     for (const translationFile of translationFiles) {
       let content = await readTranslationFile(translationFile)
 
-      if (after && content[after]) {
+      if (after && Object.hasOwn(content, after)) {
         const newContent: Record<string, string> = {}
         for (const [k, v] of Object.entries(content)) {
           newContent[k] = v
@@ -111,7 +113,7 @@ async function deleteTranslation(translationsDir: string, key: string) {
 
     for (const translationFile of translationFiles) {
       const content = await readTranslationFile(translationFile)
-      if (!content[key]) continue
+      if (!Object.hasOwn(content, key)) continue
       delete content[key]
       await saveTranslationFile(translationFile, content)
     }
@@ -127,7 +129,7 @@ async function updateTranslation(translationsDir: string, key: string, value: st
 
     for (const translationFile of translationFiles) {
       const content = await readTranslationFile(translationFile)
-      if (!content[key]) continue
+      if (!Object.hasOwn(content, key)) continue
       content[key] = value
       await saveTranslationFile(translationFile, content)
     }
@@ -154,4 +156,8 @@ function getErrorMessage(error: unknown) {
   return error instanceof Error ? error.message : String(error)
 }
 
-main().catch((error: unknown) => console.error(error))
+try {
+  await main()
+} catch (error) {
+  console.error(error)
+}
