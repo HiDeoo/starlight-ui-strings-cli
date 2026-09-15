@@ -18,21 +18,32 @@
     "globby": "^14.0.2"
   },
   "devDependencies": {
-    "@changesets/changelog-github": "^0.5.1",
-    "@changesets/cli": "^2.29.7",
-    "@hideoo/eslint-config": "^4.0.0",
-    "@hideoo/prettier-config": "^2.0.0",
-    "@hideoo/tsconfig": "^2.0.1",
+    "@changesets/changelog-github": "^1.0.1",
+    "@changesets/cli": "^3.0.2",
+    "@hideoo/eslint-config": "^5.2.1",
+    "@hideoo/prettier-config": "^2.0.2",
+    "@hideoo/tsconfig": "^2.0.4",
     "@types/node": "^18.19.39",
-    "eslint": "^9.17.0",
+    "eslint": "^10.10.0",
     "tsup": "^8.3.5",
     "prettier": "^3.4.2",
-    "typescript": "^5.7.2"
+    "typescript": "^6.0.3"
   },
   "engines": {
     "node": ">=22"
   },
-  "packageManager": "pnpm@11.22.0",
+  "devEngines": {
+    "runtime": {
+      "name": "node",
+      "version": ">=22",
+      "onFail": "download"
+    },
+    "packageManager": {
+      "name": "pnpm",
+      "version": "12.3.4",
+      "onFail": "download"
+    }
+  },
   "files": [
     "cli.mjs",
     "dist"
